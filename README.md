@@ -1,4 +1,6 @@
 # truffle-hdwallet-provider
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/trufflesuite/truffle-hdwallet-provider.svg)](https://greenkeeper.io/)
 HD Wallet-enabled Web3 provider. Use it to sign transactions for addresses derived from a 12-word mnemonic.
 
 ## Install

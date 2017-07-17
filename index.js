@@ -15,9 +15,14 @@ function HDWalletProvider(mnemonic, provider_url, address_index) {
   }
 
   this.wallet_hdpath = "m/44'/60'/0'/0/";
-  this.wallet = this.hdwallet.derivePath(this.wallet_hdpath + address_index).getWallet();
-  this.address = "0x" + this.wallet.getAddress().toString("hex");
-
+  this.wallets = [];
+  this.addresses = [];
+  for (i = 0; i < 10; i++){
+    this.wallets.push(this.hdwallet.derivePath(this.wallet_hdpath + i).getWallet());
+    this.addresses.push("0x" + this.wallets[i].getAddress().toString("hex"));
+  }
+  this.wallet = this.wallets[0];
+  this.addresses = this.addresses[0];
   this.engine = new ProviderEngine();
   this.engine.addProvider(new WalletSubprovider(this.wallet, {}));
   this.engine.addProvider(new FiltersSubprovider());
@@ -33,8 +38,15 @@ HDWalletProvider.prototype.send = function() {
   return this.engine.send.apply(this.engine, arguments);
 };
 
-HDWalletProvider.prototype.getAddress = function() {
-  return this.address;
-};
+HDWalletProvider.prototype.getAddress = function(address_index) {
+  if (address_index == null) {
+    address_index = 0;
+  return this.addresses[address_index];
+  }
+}
+
+HDWalletProvider.prototype.getAddresses = function() {
+  return this.addresses;
+}
 
 module.exports = HDWalletProvider;

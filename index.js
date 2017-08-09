@@ -7,6 +7,10 @@ var Web3Subprovider = require("web3-provider-engine/subproviders/web3.js");
 var Web3 = require("web3");
 
 function HDWalletProvider(mnemonic, provider_url, address_index) {
+  if (!bip39.validateMnemonic(mnemonic)) {
+    throw new Error("Mnemonic invalid or undefined")
+  }
+
   this.mnemonic = mnemonic;
   this.hdwallet = hdkey.fromMasterSeed(bip39.mnemonicToSeed(mnemonic));
 

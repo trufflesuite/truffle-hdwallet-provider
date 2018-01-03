@@ -50,3 +50,17 @@ module.exports = {
   }
 };
 ```
+
+## Web3 Provider
+
+You can also use the Wallet provider as an easy way to get a Web3 object that has an unlocked account to sign transactions through an INFURA node.
+
+```javascript
+const Web3 = require('web3')
+const WalletProvider = require('truffle-hdwallet-provider-privkey')
+
+const privKey = "2442e1526f1..."; // raw private key
+
+const w = new WalletProvider(privKey, "https://ropsten.infura.io/MY_INFURA_KEY")
+web3 = new Web3(w.engine)
+```

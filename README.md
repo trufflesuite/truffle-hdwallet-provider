@@ -64,3 +64,12 @@ const privKey = "2442e1526f1..."; // raw private key
 const w = new WalletProvider(privKey, "https://ropsten.infura.io/MY_INFURA_KEY")
 web3 = new Web3(w.engine)
 ```
+
+## Notes
+
+Make sure the `from` address you use when sending transactions is entirely lowercase or you will see an error like this:
+
+```
+TypeError: private key should be a Buffer
+```
+

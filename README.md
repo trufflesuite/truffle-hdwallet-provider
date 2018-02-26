@@ -64,3 +64,18 @@ const privKey = "2442e1526f1..."; // raw private key
 const w = new WalletProvider(privKey, "https://ropsten.infura.io/MY_INFURA_KEY")
 web3 = new Web3(w.engine)
 ```
+
+## Bugs
+
+Occasionally this will randomly happen:
+
+```
+var sig = secp256k1.sign(msgHash, privateKey)
+                      ^
+
+TypeError: private key should be a Buffer
+    at Object.exports.ecsign (.../node_modules/ethereumjs-tx/node_modules/ethereumjs-util/index.js:328:23)
+    at Transaction.sign (.../node_modules/ethereumjs-tx/es5/index.js:252:23)
+```
+
+But trying again will usually fix it. Not sure why this only happens occasionally.

@@ -1,5 +1,5 @@
 # truffle-hdwallet-provider
-HD Wallet-enabled Web3 provider. Use it to sign transactions for addresses derived from a 12-word mnemonic.
+HD Wallet-enabled Web3 provider. Use it to sign transactions for addresses derived from a 1-24 word mnemonic.
 
 ## Install
 
@@ -24,10 +24,10 @@ By default, the `HDWalletProvider` will use the address of the first address tha
 
 Parameters:
 
-- `mnemonic`: `string`. 12 word mnemonic which addresses are created from.
+- `mnemonic`: `string`. 1-24 word mnemonic which addresses are created from. (checksum not currently enforced)
 - `provider_uri`: `string`. URI of Ethereum client to send all other non-transaction-related Web3 requests.
 - `address_index`: `number`, optional. If specified, will tell the provider to manage the address at the index specified. Defaults to the first address (index `0`).
-
+- `password`: `string`, optional. If specified, will derive seed with addition of said bip39 passphrase.
 ## Truffle Usage
 
 You can easily use this within a Truffle configuration. For instance:

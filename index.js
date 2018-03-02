@@ -9,51 +9,53 @@ var Web3Subprovider = require("web3-provider-engine/subproviders/web3.js");
 
 var Web3 = require("web3");
 
-function TrezorProvider(path, provider_url) {
+var engine = new ProviderEngine();
+
+let TrezorProvider = function(path, provider_url) {
   
-  this.engine = new ProviderEngine();
-  this.engine.addProvider(new TrezorSubprovider(path);
-  this.engine.addProvider(new FiltersSubprovider());
-  this.addProvider(new Web3Subprovider(new Web3.providers.HttpProvider(provider_url)));
-  this.engine.start();
+  engine.addProvider(new TrezorSubprovider(path));
+  engine.addProvider(new FiltersSubprovider());
+  engine.addProvider(new Web3Subprovider(new Web3.providers.HttpProvider(provider_url)));
+  engine.start();
+  return engine;	
 
 };
 
-function WalletProvider(wallet, password, provider_url, address_index) {
+let WalletProvider = function(wallet, password, provider_url, address_index) {
 
   if (address_index == null) {
     address_index = 0;
   }
 
-  this.wallet = Wallet.fromV3(wallet, password, true);
-  this.address = "0x" + this.wallet.getAddress().toString("hex");
+  wallet = Wallet.fromV3(wallet, password, true);
+  address = "0x" + this.wallet.getAddress().toString("hex");
 
-  this.engine = new ProviderEngine();
-  this.engine.addProvider(new WalletSubprovider(this.wallet, {}));
-  this.engine.addProvider(new FiltersSubprovider());
-  this.engine.addProvider(new Web3Subprovider(new Web3.providers.HttpProvider(provider_url)));
-  this.engine.start(); // Required by the provider engine.
+  engine = new ProviderEngine();
+  engine.addProvider(new WalletSubprovider(this.wallet, {}));
+  engine.addProvider(new FiltersSubprovider());
+  engine.addProvider(new Web3Subprovider(new Web3.providers.HttpProvider(provider_url)));
+  return engine.start(); // Required by the provider engine.
 };
 
-function MnemonicProvider(mnemonic, provider_url, address_index=0, num_addresses=1) {
-  this.mnemonic = mnemonic;
-  this.hdwallet = hdkey.fromMasterSeed(bip39.mnemonicToSeed(mnemonic));
-  this.wallet_hdpath = "m/44'/60'/0'/0/";
-  this.wallets = {};
-  this.addresses = [];
+let MnemonicProvider = function(mnemonic, provider_url, address_index=0, num_addresses=1) {
+  mnemonic = mnemonic;
+  hdwallet = hdkey.fromMasterSeed(bip39.mnemonicToSeed(mnemonic));
+  wallet_hdpath = "m/44'/60'/0'/0/";
+  wallets = {};
+  addresses = [];
 
   for (let i = address_index; i < address_index + num_addresses; i++){
     var wallet = this.hdwallet.derivePath(this.wallet_hdpath + i).getWallet();
     var addr = '0x' + wallet.getAddress().toString('hex');
-    this.addresses.push(addr);
-    this.wallets[addr] = wallet;
+    addresses.push(addr);
+    wallets[addr] = wallet;
   }
 
   const tmp_accounts = this.addresses;
   const tmp_wallets = this.wallets;
 
-  this.engine = new ProviderEngine();
-  this.engine.addProvider(new HookedSubprovider({
+  engine = new ProviderEngine();
+  engine.addProvider(new HookedSubprovider({
     getAccounts: function(cb) { cb(null, tmp_accounts) },
     getPrivateKey: function(address, cb) {
       if (!tmp_wallets[address]) { return cb('Account not found'); }
@@ -69,9 +71,9 @@ function MnemonicProvider(mnemonic, provider_url, address_index=0, num_addresses
       cb(null, rawTx);
     }
   }));
-  this.engine.addProvider(new FiltersSubprovider());
-  this.engine.addProvider(new Web3Subprovider(new Web3.providers.HttpProvider(provider_url)));
-  this.engine.start(); // Required by the provider engine.
+  engine.addProvider(new FiltersSubprovider());
+  engine.addProvider(new Web3Subprovider(new Web3.providers.HttpProvider(provider_url)));
+  return engine.start(); // Required by the provider engine.
 };
 
 WalletProvider.prototype.sendAsync = function() {
@@ -98,4 +100,16 @@ MnemonicProvider.prototype.getAddress = function() {
   return this.address;
 };
 
-module.exports = WalletProvider,MnemonicProvider,TrezorProvider;
+TrezorProvider.prototype.sendAsync = function() {
+  this.engine.sendAsync.apply(this.engine, arguments);
+};
+
+TrezorProvider.prototype.send = function() {
+  return this.engine.send.apply(this.engine, arguments);
+};
+
+TrezorProvider.prototype.getAddress = function() {
+  return this.address;
+};
+
+module.exports.TrezorProvider = TrezorProvider;

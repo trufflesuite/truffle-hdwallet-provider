@@ -1,6 +1,6 @@
 {
   "name": "truffle-hdwallet-provider",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "HD Wallet-enabled Web3 provider",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "bip39": "^2.2.0",
     "ethereumjs-wallet": "^0.6.0",
     "@ledgerhq/web3-subprovider": "4.2.0",
+    "@ledgerhq/hw-transport-node-hid": "4.2.0",
     "web3": "^0.20.5",
     "web3-provider-engine": "^13.6.5"
   }

@@ -139,4 +139,4 @@ LedgerProvider.prototype.getAddress = function() {
 module.exports.TrezorProvider = TrezorProvider;
 module.exports.WalletProvider = WalletProvider;
 module.exports.TrezorProvider = TrezorProvider;
-module.exports.LedgerProivder = LedgerProvider;
+module.exports.LedgerProvider = LedgerProvider;

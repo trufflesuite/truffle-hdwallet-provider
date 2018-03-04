@@ -3,19 +3,22 @@ var hdkey = require('ethereumjs-wallet/hdkey');
 var Wallet = require('ethereumjs-wallet');
 var ProviderEngine = require("web3-provider-engine");
 var TrezorSubprovider = require("@daonomic/trezor-wallet-provider");
-var createLedgerSubprovider = require("@ledgerhq/web3-subprovider");
+var createLedgerSubprovider = require("@ledgerhq/web3-subprovider").default;
 var FiltersSubprovider = require('web3-provider-engine/subproviders/filters.js');
 var WalletSubprovider = require('web3-provider-engine/subproviders/wallet.js');
 var Web3Subprovider = require("web3-provider-engine/subproviders/web3.js");
+var TransportU2F = require("@ledgerhq/hw-transport-node-hid").default;
 
 var Web3 = require("web3");
 
 var engine = new ProviderEngine();
 
 let LedgerProvider = function(path, provider_url) {
-  
-  var ledgerWalletSubProvider = createLedgerSubprovider(path);
-  engine.addProvider(ledgerWalletSubProvider);
+  const getTransport = () => TransportU2F.create();
+  const ledger = createLedgerSubprovider(getTransport, {
+    accountsLength: 5
+  });
+  engine.addProvider(ledger); 
   engine.addProvider(new FiltersSubprovider());
   engine.addProvider(new Web3Subprovider(new Web3.providers.HttpProvider(provider_url)));
   engine.start();

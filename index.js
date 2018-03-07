@@ -1,3 +1,4 @@
+require("babel-polyfill");
 var bip39 = require("bip39");
 var hdkey = require('ethereumjs-wallet/hdkey');
 var Wallet = require('ethereumjs-wallet');

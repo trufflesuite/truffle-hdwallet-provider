@@ -13,10 +13,11 @@ var Web3 = require("web3");
 
 var engine = new ProviderEngine();
 
-let LedgerProvider = function(path, provider_url) {
+let LedgerProvider = function(network_id, account_number, provider_url) {
   const getTransport = () => TransportU2F.create();
   const ledger = createLedgerSubprovider(getTransport, {
-    accountsLength: 5
+    networkId: network_id,
+    accountsOffset: account_number 
   });
   engine.addProvider(ledger); 
   engine.addProvider(new FiltersSubprovider());

@@ -49,7 +49,7 @@ async-eventemitter@^0.2.2:
   dependencies:
     async "^2.4.0"
 
-"async-eventemitter@github:ahultgren/async-eventemitter#fa06e39e56786ba541c180061dbf2c0a5bbf951c":
+async-eventemitter@ahultgren/async-eventemitter#fa06e39e56786ba541c180061dbf2c0a5bbf951c:
   version "0.2.3"
   resolved "https://codeload.github.com/ahultgren/async-eventemitter/tar.gz/fa06e39e56786ba541c180061dbf2c0a5bbf951c"
   dependencies:
@@ -2098,9 +2098,9 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-web3-provider-engine@^13.0.1:
-  version "13.4.0"
-  resolved "https://registry.yarnpkg.com/web3-provider-engine/-/web3-provider-engine-13.4.0.tgz#78c2794ba926d0c5b94c6e8955abb994bb8e8854"
+web3-provider-engine@0xproject/provider-engine:
+  version "13.6.5"
+  resolved "https://codeload.github.com/0xproject/provider-engine/tar.gz/688e4772ffd6ee3d616ddff08c240b1d2a8a383e"
   dependencies:
     async "^2.5.0"
     clone "^2.0.0"

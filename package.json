@@ -27,6 +27,6 @@
     "bip39": "^2.2.0",
     "ethereumjs-wallet": "^0.6.0",
     "web3": "^0.18.2",
-    "web3-provider-engine": "0xproject/provider-engine"
+    "web3-provider-engine": "^8.4.0"
   }
 }

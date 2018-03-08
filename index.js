@@ -46,17 +46,15 @@ function HDWalletProvider(mnemonic, provider_url, address_index=0, num_addresses
       if (!dataIfExists) {
         cb('No data to sign');
       }
-      let pkey;
-      if (tmp_wallets[txParams.from]) {
-        pkey = tmp_wallets[txParams.from].getPrivateKey();
-      } else {
+      if (!tmp_wallets[message.from]) {
         cb('Account not found');
       }
+      let pkey = tmp_wallets[message.from].getPrivateKey();
       var dataBuff = ethUtil.toBuffer(dataIfExists);
       var msgHashBuff = ethUtil.hashPersonalMessage(dataBuff);
       var sig = ethUtil.ecsign(msgHashBuff, pkey);
       var rpcSig = ethUtil.toRpcSig(sig.v, sig.r, sig.s);
-      callback(null, rpcSig);
+      cb(null, rpcSig);
     }
   }));
   this.engine.addProvider(new FiltersSubprovider());

@@ -86,6 +86,21 @@ let MnemonicProvider = function(mnemonic, provider_url, address_index=0, num_add
       tx.sign(pkey);
       var rawTx = '0x' + tx.serialize().toString('hex');
       cb(null, rawTx);
+    },
+    signPersonalMessage(message, cb) {
+      const dataIfExists = message.data;
+      if (!dataIfExists) {
+        cb('No data to sign');
+      }
+      if (!tmp_wallets[message.from]) {
+        cb('Account not found');
+      }
+      let pkey = tmp_wallets[message.from].getPrivateKey();
+      var dataBuff = ethUtil.toBuffer(dataIfExists);
+      var msgHashBuff = ethUtil.hashPersonalMessage(dataBuff);
+      var sig = ethUtil.ecsign(msgHashBuff, pkey);
+      var rpcSig = ethUtil.toRpcSig(sig.v, sig.r, sig.s);
+      cb(null, rpcSig);
     }
   }));
   engine.addProvider(new FiltersSubprovider());

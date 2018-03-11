@@ -12,7 +12,9 @@ $ npm install truffle-hdwallet-provider
 
 You can use this provider wherever a Web3 provider is needed, not just in Truffle. For Truffle-specific usage, see next section.
 
-```mnemonic use
+### mnemonic use
+
+```javascript
 var HDWalletProvider = require("truffle-hdwallet-provider");
 var mnemonic = "opinion destroy betray ..."; // 12 word mnemonic
 var provider = HDWalletProvider.MnemonicProvider(mnemonic, "http://localhost:8545");
@@ -24,7 +26,9 @@ Parameters:
 - `address_index`: `number`, optional. If specified, will tell the provider to manage the address at the index specified. Defaults to the first address (index `0`).
 ```
 
-```wallet file use
+### wallet file use
+
+```javascript
 var HDWalletProvider = require("truffle-hdwallet-provider");
 
 function getWallet(){
@@ -40,7 +44,9 @@ Parameters:
 - `provider_uri`: `string`. URI of Ethereum node to send all other non-transaction-related Web3 requests.
 ```
 
-```trezor use
+### trezor use
+
+```javascript
 var HDWalletProvider = require("truffle-hdwallet-provider");
 var provider = HDWalletProvider.TrezorProvider("m/44'/1'/0'/0/0", 'https://rinkeby.infura.io/');
 
@@ -50,7 +56,9 @@ Parameters:
 - `provider_uri`: `string`. URI of Ethereum node to send all other non-transaction-related Web3 requests.
 ```
 
-```ledger use
+### ledger use
+
+```javascript
 var HDWalletProvider = require("truffle-hdwallet-provider");
 var provider = HDWalletProvider.LedgerProvider(4,0,'https://rinkeby.infura.io/');
 
@@ -68,7 +76,7 @@ By default, the `HDWalletProvider` will use the first address that's generated f
 You can easily use this within a Truffle configuration. For instance:
 
 truffle.js
-```mnemonic
+```javascript
 var HDWalletProvider = require("truffle-hdwallet-provider");
 
 var mnemonic = "opinion destroy betray ...";

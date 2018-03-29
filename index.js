@@ -1,4 +1,3 @@
-var bip39 = require("bip39");
 var Wallet = require('ethereumjs-wallet');
 var ProviderEngine = require("web3-provider-engine");
 var FiltersSubprovider = require('web3-provider-engine/subproviders/filters.js');

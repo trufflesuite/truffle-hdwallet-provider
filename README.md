@@ -27,6 +27,7 @@ Parameters:
 - `mnemonic`: `string`. 12 word mnemonic which addresses are created from.
 - `provider_uri`: `string`. URI of Ethereum client to send all other non-transaction-related Web3 requests.
 - `address_index`: `number`, optional. If specified, will tell the provider to manage the address at the index specified. Defaults to the first address (index `0`).
+- `num_addresses`: `number`, optional. If specified, will tell the provider to create the specified number of addresses. Defaults to `1`.
 
 ## Truffle Usage
 

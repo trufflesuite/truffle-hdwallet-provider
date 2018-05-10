@@ -20,7 +20,7 @@ var provider = new HDWalletProvider(mnemonic, "http://localhost:8545");
 var provider = new HDWalletProvider(mnemonic, "http://localhost:8545", 5);
 ```
 
-By default, the `HDWalletProvider` will use the address of the first address that's generated from the mnemonic. If you pass in a specific index, it'll use that address instead. Currently, the `HDWalletProvider` manages only one address at a time, but it can be easily upgraded to manage (i.e., "unlock") multiple addresses.
+By default, the `HDWalletProvider` will use the address of the first address that's generated from the mnemonic. If you pass in a specific index, it'll use that address instead.
 
 Parameters:
 

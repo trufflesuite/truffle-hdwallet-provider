@@ -8,6 +8,9 @@ const ethereumjsWallet = require('ethereumjs-wallet')
 
 function HDWalletProvider (privateKeys, providerUrl) {
 
+  this.wallets = {};
+  this.addresses = [];
+  
   // from https://github.com/trufflesuite/truffle-hdwallet-provider/pull/25/commits
   for (let key of privateKeys) {
     var wallet = ethereumjsWallet.fromPrivateKey(new Buffer(key, "hex"));
@@ -15,6 +18,9 @@ function HDWalletProvider (privateKeys, providerUrl) {
     this.addresses.push(addr);
     this.wallets[addr] = wallet;
   }
+  
+  const tmpAccounts = this.addresses;
+  const tmpWallets = this.wallets;
 
   this.engine = new ProviderEngine()
   this.engine.addProvider(

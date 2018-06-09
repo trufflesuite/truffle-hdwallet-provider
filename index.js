@@ -44,7 +44,7 @@ let WalletProvider = function(wallet, password, provider_url, address_index) {
     address_index = 0;
   }
 
-  wallet = Wallet.fromV3(wallet, password, true);
+  this.wallet = Wallet.fromV3(wallet, password, true);
   address = "0x" + this.wallet.getAddress().toString("hex");
 
   engine = new ProviderEngine();

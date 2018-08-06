@@ -11,9 +11,9 @@ function HDWalletProvider(mnemonics, provider_url, address_index=0, num_addresse
   if (!Array.isArray(mnemonics)) {
     mnemonics = [mnemonics];
   }
-  
+  this.mnemonics = mnemonics;
   this.hdwallets = [];
-  mnemonics.forEach((mnemonic) => {
+  this.mnemonics.forEach((mnemonic) => {
     if (typeof mnemonic == 'object') {
       let mnemonic_words = mnemonic.mnemonic;
       let password = mnemonic.password

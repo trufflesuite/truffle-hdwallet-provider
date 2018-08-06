@@ -27,6 +27,19 @@ var provider = new HDWalletProvider(mnemonic, "http://localhost:8545", 5);
 
 By default, the `HDWalletProvider` will use the address of the first address that's generated from the mnemonic. If you pass in a specific index, it'll use that address instead. Currently, the `HDWalletProvider` manages only one address at a time, but it can be easily upgraded to manage (i.e., "unlock") multiple addresses.
 
+You can use mnemonic + password:
+
+```javascript
+var HDWalletProvider = require("truffle-hdwallet-provider");
+var mnemonic = "opinion destroy betray ..."; // 12 word mnemonic
+var password = "verysecert";
+var provider = new HDWalletProvider({mnemonic: mnemonic, password: password}], "http://localhost:8545");
+
+// Or, even multiple mnemonics and passwords.
+var provider = new HDWalletProvider([mnemonic, {mnemonic: mnemonic2, password: password2}, {mnemonic: mnemonic3, password: password3}], "http://localhost:8545");
+```
+
+
 Parameters:
 
 - `mnemonic`: `string`. 12 word mnemonic which addresses are created from.

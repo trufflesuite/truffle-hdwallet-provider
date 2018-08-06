@@ -7,19 +7,35 @@ var ProviderSubprovider = require("web3-provider-engine/subproviders/provider.js
 var Web3 = require("web3");
 var Transaction = require('ethereumjs-tx');
 
-function HDWalletProvider(mnemonic, provider_url, address_index=0, num_addresses=1) {
-  this.mnemonic = mnemonic;
-  this.hdwallet = hdkey.fromMasterSeed(bip39.mnemonicToSeed(mnemonic));
+function HDWalletProvider(mnemonics, provider_url, address_index=0, num_addresses=1) {
+  if (!Array.isArray(mnemonics)) {
+    mnemonics = [mnemonics];
+  }
+  
+  this.hdwallets = [];
+  mnemonics.forEach((mnemonic) => {
+    if (typeof mnemonic == 'object') {
+      let mnemonic_words = mnemonic.mnemonic;
+      let password = mnemonic.password
+      this.hdwallets.push(hdkey.fromMasterSeed(bip39.mnemonicToSeed(mnemonic_words, password)));
+    } else {
+      this.hdwallets.push(hdkey.fromMasterSeed(bip39.mnemonicToSeed(mnemonic)));
+    }
+  })
+  
   this.wallet_hdpath = "m/44'/60'/0'/0/";
   this.wallets = {};
   this.addresses = [];
 
-  for (let i = address_index; i < address_index + num_addresses; i++){
-    var wallet = this.hdwallet.derivePath(this.wallet_hdpath + i).getWallet();
-    var addr = '0x' + wallet.getAddress().toString('hex');
-    this.addresses.push(addr);
-    this.wallets[addr] = wallet;
-  }
+  this.hdwallets.forEach((hdwallet) => {
+    for (let i = address_index; i < address_index + num_addresses; i++) {
+      var wallet = hdwallet.derivePath(this.wallet_hdpath + i).getWallet();
+      var addr = '0x' + wallet.getAddress().toString('hex');
+      this.addresses.push(addr);
+      this.wallets[addr] = wallet;
+    }
+  })
+  
 
   const tmp_accounts = this.addresses;
   const tmp_wallets = this.wallets;
@@ -56,7 +72,6 @@ HDWalletProvider.prototype.send = function() {
 
 // returns the address of the given address_index, first checking the cache
 HDWalletProvider.prototype.getAddress = function(idx) {
-  console.log('getting addresses', this.addresses[0], idx)
   if (!idx) { return this.addresses[0]; }
   else { return this.addresses[idx]; }
 }

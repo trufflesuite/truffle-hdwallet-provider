@@ -36,6 +36,7 @@ Parameters:
 | address_index | *number* | 0 | <optional> If specified, will tell the provider to manage the address at the index specified |
 | num_addresses | *number* | 1 | <optional> If specified, will create `number` addresses when instantiated |
 | shareNonce | *boolean* | true | <optional> If false, a new WalletProvider will track its own nonce-state |
+| networkId | *number* | 60 | <optional> If specified, will tell the provider to derive addresses using it in the dpath |
 
 ## Truffle Usage
 

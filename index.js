@@ -20,11 +20,12 @@ function HDWalletProvider(
   provider_url,
   address_index=0,
   num_addresses=1,
-  shareNonce=true
+  shareNonce=true,
+  networkId=60
 ) {
   this.mnemonic = mnemonic;
   this.hdwallet = hdkey.fromMasterSeed(bip39.mnemonicToSeed(mnemonic));
-  this.wallet_hdpath = "m/44'/60'/0'/0/";
+  this.wallet_hdpath = `m/44'/${networkId}'/0'/0/`;
   this.wallets = {};
   this.addresses = [];
 

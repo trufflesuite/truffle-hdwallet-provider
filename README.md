@@ -1,6 +1,11 @@
 # truffle-hdwallet-provider
 HD Wallet-enabled Web3 provider. Use it to sign transactions for addresses derived from a 12-word mnemonic.
 
+### :warning: This repo is deprecated :warning:
+**Truffle has moved all modules to a monorepo at [trufflesuite/truffle](https://github.com/trufflesuite/truffle). See you over there!**
+
+-----------------------
+
 ## Install
 
 ```

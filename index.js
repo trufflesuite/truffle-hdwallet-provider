@@ -1,4 +1,5 @@
-const bip39 = require("bip39");
+const bip39 = require("ethereum-cryptography/bip39");
+const { wordlist } = require("ethereum-cryptography/bip39/wordlists/english");
 const ethJSWallet = require('ethereumjs-wallet');
 const hdkey = require('ethereumjs-wallet/hdkey');
 const debug = require('debug')('truffle-hdwallet-provider')
@@ -44,12 +45,12 @@ function HDWalletProvider(
     }
   } else {
     this.mnemonic = mnemonic;
-    this.hdwallet = hdkey.fromMasterSeed(bip39.mnemonicToSeed(mnemonic));
+    this.hdwallet = hdkey.fromMasterSeed(bip39.mnemonicToSeedSync(mnemonic));
     this.wallet_hdpath = wallet_hdpath;
     this.wallets = {};
     this.addresses = [];
 
-    if (!bip39.validateMnemonic(mnemonic)) {
+    if (!bip39.validateMnemonic(mnemonic, wordlist)) {
       throw new Error("Mnemonic invalid or undefined")
     }
 
@@ -95,7 +96,7 @@ function HDWalletProvider(
       const sig = ethUtil.ecsign(msgHashBuff, pkey);
       const rpcSig = ethUtil.toRpcSig(sig.v, sig.r, sig.s);
       cb(null, rpcSig);
-      }		     
+    }
   }));
 
   (!shareNonce)
